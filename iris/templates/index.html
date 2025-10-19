@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Iris Predictor{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class = "hero">
+        <h1>Iris Classification Predictor</h1>
+        <p class="lead">Machine Learning with the Classic Iris Dataset.</p>
+        <p> This applciation demonstrates Machine Learning Concepts including data analysis, visualization, and classification models</p>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card feature-card">
+                <div class="card-body">
+                    <h5 class="card_title"> Data Analysis</h5>
+                    <p class="text">Exlore the Iris datset with statistical summaries and data insights.</p>
+                    <a href="/data" class = "btn btn-primary">View Data</a>
+                </div>
+            </div>
+        </div>
+        <div class ="col-md-4">
+            <div class = "card feature-card">
+                <div class ="card-body">
+                    <h5 class="card_title">Visualizations</h5>
+                    <p class = "card-text">See charts and plots that reveal patterns in the data.</p>
+                    <a href="/visualization" class = "btn btn-primary">View Charts</a>
+                </div>
+            </div>
+        </div>
+        <div class ="col-md-4">
+            <div class = "card feature-card">
+                <div class = "card-body">
+                    <h5 classes="card_title">Machine Learning Models</h5>
+                    <p class="card-text">Compare three classification models and make predictions.</p>
+                    <a href = "/models" class = "btn btn-primary">Try Models</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-section mt-5">
+        <h2>About this App</h2>
+        <p>The Iris dataset isone of the most famous datasets in machine learning. It contains measurements of iris flowers and their species. This app demonstrates:</p>
+        <ul>
+            <li><strong>Data Preprocessing:</strong> Cleaning and preparing data</li>
+            <li><strong>EDA:</strong> Understanding data through visualization</li>
+            <li><strong>Classification:</strong> Using three different ML algorithms</li>
+            <li><strong>Prediction:</strong> Making predictions on new data</li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}
