@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}ML Models - Iris ML App{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Machine Learning Models</h1>
+
+    <div class="row mt-4">
+        {% for model_name, accuracy in accuracies.items() %}
+        <div class="col-md-4 mb-4">
+            <div class="card model-card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ model_name }}</h5>
+                    <div class="accuracy-badge">{{ accuracy }}%</div>
+                    <p class="card-text">Test Set Accuracy</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="mt-5 prediction-section">
+        <h3>🔮 Make a Prediction</h3>
+        <form id="predictionForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="sepalLength" class="form-label">Sepal Length (cm)</label>
+                        <input type="number" class="form-control" id="sepalLength" step="0.1" placeholder="4.3 - 7.9" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sepalWidth" class="form-label">Sepal Width (cm)</label>
+                        <input type="number" class="form-control" id="sepalWidth" step="0.1" placeholder="2.0 - 4.4" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="petalLength" class="form-label">Petal Length (cm)</label>
+                        <input type="number" class="form-control" id="petalLength" step="0.1" placeholder="1.0 - 6.9" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="petalWidth" class="form-label">Petal Width (cm)</label>
+                        <input type="number" class="form-control" id="petalWidth" step="0.1" placeholder="0.1 - 2.5" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="modelSelect" class="form-label">Select Model</label>
+                <select class="form-select" id="modelSelect" required>
+                    {% for model_name in accuracies.keys() %}
+                    <option value="{{ model_name }}">{{ model_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-lg">Predict Species</button>
+        </form>
+
+        <div id="result" class="mt-4"></div>
+    </div>
+</div>
+
+<script>
+document.getElementById('predictionForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const data = {
+        sepal_length: document.getElementById('sepalLength').value,
+        sepal_width: document.getElementById('sepalWidth').value,
+        petal_length: document.getElementById('petalLength').value,
+        petal_width: document.getElementById('petalWidth').value,
+        model: document.getElementById('modelSelect').value
+    };
+
+    try {
+        const response = await fetch('/predict', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        displayResult(result);
+    } catch (error) {
+        document.getElementById('result').innerHTML = '<div class="alert alert-danger">Error making prediction</div>';
+    }
+});
+
+function displayResult(result) {
+    let html = `<div class="alert alert-success"><h4>🎯 Prediction: <strong>${result.prediction}</strong></h4>`;
+    html += '<h5>Confidence:</h5><ul>';
+    for (const [species, prob] of Object.entries(result.probabilities)) {
+        html += `<li>${species}: ${prob}%</li>`;
+    }
+    html += '</ul></div>';
+    document.getElementById('result').innerHTML = html;
+}
+</script>
+{% endblock %}
