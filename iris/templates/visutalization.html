@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Visualizations - Iris Predictor{% endblock %}
+<div class ="container mt-5">
+    <h1>Data Visualizations</h1>
+
+     <div class="mt-4">
+        <h3>Distribution Histograms</h3>
+        <img src="data:image/png;base64,{{ charts['histograms'] }}" class="img-fluid chart-img" alt="Histograms">
+    </div>
+
+    <div class="mt-5">
+        <h3>Scatter Plots</h3>
+        <img src="data:image/png;base64,{{ charts['scatter'] }}" class="img-fluid chart-img" alt="Scatter Plots">
+    </div>
+
+    <div class="mt-5">
+        <h3>Correlation Matrix</h3>
+        <img src="data:image/png;base64,{{ charts['correlation'] }}" class="img-fluid chart-img" alt="Correlation">
+    </div>
+</div>
+
+{% endblock %}
