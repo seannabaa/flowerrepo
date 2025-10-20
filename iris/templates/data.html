@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Data Analysis - Iris Predictor{% endblock %}
+
+{% block content %}
+<div class ="container mt-5">
+    <h1>Data Analysis</h1>
+    
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="info-box">
+                <h3>Null Values</h3>
+                <p>No missing data detected - the Data is clean!</p>
+            </div>
+        </div>
+        <div class = "col-md-6">
+            <div class ="info-box">
+                <h3>Species Distribution</h3>
+                {% for species, count in species_count.items() %}
+                    <p><strong>{{ species }}:</strong> {{ count }} samples</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h3>statistical Summary</h3>
+        <div class=""table-responsive">
+            {{ stats | safe}}
+        </div>
+    </div>
+</div>
+{% endblock %}
